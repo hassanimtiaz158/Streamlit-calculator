@@ -1,26 +1,21 @@
 import streamlit as st
 
-st.title('TASK-01')
-st.header('SIMPLE CALCULATOR')
+st.title("Task-02")
+st.header("BMI Calculator")
 
-num1 = int(st.number_input("Enter num1: "))
-num2 = int(st.number_input("Enter num2: "))
+height = st.number_input("Enter height (cm):", min_value=1.0)
+weight = st.number_input("Enter weight (kg):", min_value=1.0)
 
-operation = st.radio("Select operation: ", ("Add", "Subtract", "Multiply", "Divide"))
+if st.button("Calculate BMI"):
+    height_in_m = height / 100
+    bmi = weight / (height_in_m ** 2)
+    st.success(f"Your BMI: {bmi:.2f}")
 
-if st.button("CALCULATE"):
-    if operation == "Add":
-        result = num1 + num2
-        st.success(f"Result: {result}")
-    elif operation == "Subtract":
-        result = num1 - num2
-        st.success(f"Result: {result}")
-    elif operation == "Multiply":
-        result = num1 * num2
-        st.success(f"Result: {result}")
-    elif operation == "Divide":
-        if num2 != 0:
-            result = num1 / num2
-            st.success(f"Result: {result}")
-        else:
-            st.error("Division by zero is not allowed.")
+    if bmi < 18.5:
+        st.warning("Underweight")
+    elif 18.5 <= bmi < 25:
+        st.success("Normal weight")
+    elif 25 <= bmi < 30:
+        st.warning("Overweight")
+    else:
+        st.error("Obese")
